@@ -3,9 +3,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { randomUUID } from 'crypto';
 import { Role } from '../../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { CompleteRegistrationDto } from './dto/complete-registration.dto';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 
@@ -105,6 +107,51 @@ export class ClientsService {
 
     return {
       message: 'Client deleted successfully',
+    };
+  }
+  async completeRegistration(completeRegistrationDto: CompleteRegistrationDto) {
+    const { token, password } = completeRegistrationDto;
+
+    const user = await this.prisma.user.findFirst({
+      where: {
+        inviteToken: token,
+        role: Role.CLIENT,
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException('Invalid invitation');
+    }
+
+    if (!user.inviteExpires || user.inviteExpires < new Date()) {
+      throw new ConflictException('Invitation has expired');
+    }
+
+    if (user.password) {
+      throw new ConflictException('Registration already completed');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const client = await this.prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        password: hashedPassword,
+        inviteToken: null,
+        inviteExpires: null,
+      },
+    });
+
+    return {
+      message: 'Registration completed successfully',
+      client: {
+        id: client.id,
+        firstName: client.firstName,
+        lastName: client.lastName,
+        email: client.email,
+      },
     };
   }
 }
