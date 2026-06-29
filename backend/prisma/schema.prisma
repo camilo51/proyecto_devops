@@ -7,64 +7,49 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  LAWYER
+  CLIENT
+}
+
 enum CaseStatus {
-  PENDING
+  OPEN
   IN_PROGRESS
   CLOSED
 }
 
 model User {
-  id          String       @id @default(uuid())
-  firstName   String
-  lastName    String
-  email       String       @unique
-  password    String
-  invitations Invitation[]
-  clients     Client[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-}
-
-model Invitation {
-  id         String    @id @default(uuid())
-  token      String    @unique
-  email      String    @unique
-  expiresAt  DateTime
-  used       Boolean   @default(false)
-  lawyerId   String
-  lawyer     User      @relation(fields: [lawyerId], references: [id], onDelete: Cascade)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-
-  @@index([lawyerId])
-}
-
-model Client {
-  id         String     @id @default(uuid())
+  id         String   @id @default(cuid())
   firstName  String
   lastName   String
-  email      String     @unique
-  phone      String?
-  password   String
-  isActive   Boolean    @default(true)
-  lawyerId   String
-  lawyer     User       @relation(fields: [lawyerId], references: [id], onDelete: Cascade)
-  cases      Case[]
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  email      String   @unique
 
-  @@index([lawyerId])
+  password   String?
+
+  role       Role     @default(LAWYER)
+
+  inviteToken   String?   @unique
+  inviteExpires DateTime?
+
+  lawyerCases Case[] @relation("LawyerCases")
+  clientCases Case[] @relation("ClientCases")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Case {
-  id          String      @id @default(uuid())
+  id          String     @id @default(cuid())
   title       String
-  description String
-  status      CaseStatus  @default(PENDING)
-  clientId    String
-  client      Client      @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  description String?
+  status      CaseStatus @default(OPEN)
 
-  @@index([clientId])
+  lawyerId String
+  lawyer   User @relation("LawyerCases", fields: [lawyerId], references: [id])
+
+  clientId String
+  client   User @relation("ClientCases", fields: [clientId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
