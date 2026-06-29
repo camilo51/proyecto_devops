@@ -1,0 +1,54 @@
+services:
+  frontend:
+    container_name: abogados-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    networks:
+      - abogados-network
+
+  backend:
+    container_name: abogados-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    env_file:
+      - ./backend/.env.docker
+    depends_on:
+      - postgres
+    networks:
+      - abogados-network
+
+  postgres:
+    container_name: abogados-postgres
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: abogados
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - abogados-network
+
+volumes:
+  postgres_data:
+
+networks:
+  abogados-network:
