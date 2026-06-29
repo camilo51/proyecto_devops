@@ -35,9 +35,7 @@ export class ClientsService {
         email,
         role: Role.CLIENT,
         inviteToken,
-        inviteExpires: new Date(
-          Date.now() + 1000 * 60 * 60 * 24,
-        ),
+        inviteExpires: new Date(Date.now() + 1000 * 60 * 60 * 24),
       },
     });
 
