@@ -1,14 +1,5 @@
-import {
-    ConflictException,
-    NotFoundException,
-} from '@nestjs/common';
-import {
-    beforeEach,
-    describe,
-    expect,
-    it,
-    vi,
-} from 'vitest';
+import { ConflictException, NotFoundException } from '@nestjs/common';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Role } from './../generated/prisma/client';
 import { ClientsService } from './../src/clients/clients.service';
 import { PrismaService } from './../src/prisma/prisma.service';
@@ -97,9 +88,7 @@ describe('ClientsService', () => {
     it('Lanza una excepción cuando el cliente no existe', async () => {
       prisma.user.findFirst.mockResolvedValue(null);
 
-      await expect(service.findOne('1')).rejects.toThrow(
-        NotFoundException,
-      );
+      await expect(service.findOne('1')).rejects.toThrow(NotFoundException);
     });
   });
 
