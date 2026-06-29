@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 3001
 
+RUN bunx prisma generate
+
 CMD ["bun", "run", "start:dev"]
