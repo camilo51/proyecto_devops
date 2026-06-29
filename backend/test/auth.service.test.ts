@@ -85,10 +85,7 @@ describe('Servicio de autenticación', () => {
 
       expect(result.user.email).toBe('camilo@test.com');
 
-      expect(bcrypt.compare).toHaveBeenCalledWith(
-        '12345678',
-        'hashedPassword',
-      );
+      expect(bcrypt.compare).toHaveBeenCalledWith('12345678', 'hashedPassword');
     });
 
     it('Lanza una excepción cuando el usuario no existe', async () => {
