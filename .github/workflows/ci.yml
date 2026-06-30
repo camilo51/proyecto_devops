@@ -62,6 +62,9 @@ jobs:
 
       - name: Compilar Frontend
         run: bun run build
+        
+      - name: Ejecutar pruebas
+        run: bun run test
 
   docker:
     name: Docker
