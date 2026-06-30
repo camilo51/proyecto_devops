@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { Client } from "@/types/client";
+import { Client, CreateClientDto, UpdateClientDto } from "@/types/client";
 
 export class ClientService {
   static async findAll() {
@@ -14,32 +14,19 @@ export class ClientService {
     return response.data;
   }
 
-  static async create(data: {
-    firstName: string;
-    lastName: string;
-    email: string;
-  }) {
-    const response = await api.post("/clients", data);
+  static async create(data: CreateClientDto) {
+    const response = await api.post<Client>("/clients", data);
 
     return response.data;
   }
 
-  static async update(
-    id: string,
-    data: {
-      firstName: string;
-      lastName: string;
-      email: string;
-    },
-  ) {
-    const response = await api.patch(`/clients/${id}`, data);
+  static async update(id: string, data: UpdateClientDto) {
+    const response = await api.patch<Client>(`/clients/${id}`, data);
 
     return response.data;
   }
 
   static async remove(id: string) {
-    const response = await api.delete(`/clients/${id}`);
-
-    return response.data;
+    await api.delete(`/clients/${id}`);
   }
 }
