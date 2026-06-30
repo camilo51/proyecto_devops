@@ -21,7 +21,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Legal Desk",
+  title: "Sabrin",
   description: "Sistema de gestión jurídica",
 };
 

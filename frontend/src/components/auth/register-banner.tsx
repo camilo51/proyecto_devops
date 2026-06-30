@@ -11,7 +11,7 @@ export function RegisterBanner() {
         </div>
 
         <div>
-          <h1 className="font-heading text-4xl">Legal Desk</h1>
+          <h1 className="font-heading text-4xl">Sabrin</h1>
 
           <p className="mt-1 text-white/70">Gestión jurídica moderna</p>
         </div>
@@ -29,7 +29,7 @@ export function RegisterBanner() {
       </div>
 
       <div className="relative z-10 p-12">
-        <p className="font-mono text-sm text-white/50">© 2026 Legal Desk</p>
+        <p className="font-mono text-sm text-white/50">© 2026 Sabrin</p>
       </div>
     </section>
   );
