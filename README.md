@@ -122,9 +122,9 @@ El acceso desde el backend se realiza mediante Prisma ORM.
 - [x] Docker Compose
 - [x] PostgreSQL
 - [x] Prisma ORM
-- [ ] Autenticación
-- [ ] Gestión de clientes
-- [ ] Invitaciones
-- [ ] Gestión de casos
-- [ ] Pruebas
-- [ ] GitHub Actions
+- [x] Autenticación
+- [x] Gestión de clientes
+- [x] Invitaciones
+- [x] Gestión de casos
+- [x] Pruebas
+- [x] GitHub Actions
