@@ -3,7 +3,7 @@ export function Navbar() {
     <header className="flex h-24 items-center justify-between border-b border-border bg-white px-10">
       <div>
         <p className="font-mono text-xs uppercase tracking-widest text-muted">
-          Legal Desk
+          Sabrin
         </p>
 
         <h2 className="mt-2 font-heading text-3xl text-foreground">

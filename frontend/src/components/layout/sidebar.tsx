@@ -40,7 +40,7 @@ export function Sidebar() {
           </div>
 
           <div>
-            <h1 className="font-heading text-3xl">Legal Desk</h1>
+            <h1 className="font-heading text-3xl">Sabrin</h1>
 
             <p className="mt-1 text-sm text-white/60">Gestión Jurídica</p>
           </div>

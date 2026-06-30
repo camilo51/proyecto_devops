@@ -8,7 +8,7 @@ type StatCardProps = {
 
 export function StatCard({ title, value, icon }: StatCardProps) {
   return (
-    <article className="rounded-3xl border border-border bg-white p-7 transition hover:-translate-y-1 hover:shadow-xl">
+    <article className="rounded-3xl border border-border bg-white p-7 transition hover:-translate-y-1 hover:shadow-lg">
       <div className="flex items-center justify-between">
         <div className="rounded-2xl bg-accent p-4 text-white">{icon}</div>
 

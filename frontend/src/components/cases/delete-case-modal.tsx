@@ -16,7 +16,7 @@ export function DeleteCaseModal({ legalCase, onClose, onSuccess }: Props) {
 
   async function removeCase() {
     try {
-      await CaseService.remove(legalCase.id);
+      await CaseService.remove(legalCase!.id);
 
       toast.success("Caso eliminado");
 
